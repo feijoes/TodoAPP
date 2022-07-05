@@ -1,25 +1,17 @@
-import React, {useEffect,useState} from 'react'
+import React from 'react'
 import "../config";
+import "../static/Home.css"
 export const Home = () => {
-    const [todo,setTodo] = useState([])
-    useEffect(() => {
-      const get = async () =>{
-        const resolve = await fetch(global.config.URL)
-        const data = await resolve.json()
-        setTodo(data.todos)
-      }
-      get()
-    }, []);
 
     return( 
-        <div>
+        <div className='container'>
             <div>
               <h1>Tasks Manager</h1>
               <p>Here where you completed you tasks</p>
             </div>
             <div>
-              <h1>Login</h1>
-              <form>
+              <h2>Login</h2>
+              <form to={global.config.url + "login/"} method="POST">
   
               </form>
             </div>

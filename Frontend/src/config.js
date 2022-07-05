@@ -1,3 +1,4 @@
 module.exports = global.config = {
-    url: "http://localhost:5000/api/v1/todo/"
+    urlAPI: "http://localhost:5000/api/v1/todo/",
+    url:"http://localhost:5000/api/v1/"
 }

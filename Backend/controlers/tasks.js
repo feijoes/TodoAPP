@@ -1,4 +1,5 @@
-const Task = require("../models/Task");
+const connection = require('../db/coneccion');
+const Task = connection.models.Task
 
 
 // Create or Get a task
