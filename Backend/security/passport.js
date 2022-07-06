@@ -2,18 +2,17 @@
 const passport = require('passport');
 const { validPassword } = require('../lib/passwordUtils');
 const LocalStrategy = require('passport-local').Strategy;
-const connection = require('../db/coneccion');
-const User = connection.models.User;
+const {User} = require('../db/coneccion');
 
 const VerifiyCallback =  ( username, password, done )=>{
-    User.finOne({ username:username },(err,user)=>{
+ 
+    User.findOne({ username:username },(err,user)=>{
         if (err) { return done(err); }
         if (!user) { return done(null, false ) }
         if (!validPassword(password, user.hash, user.salt))  { return done(null, false); }
-
         return done(null, user)
     })
-
+   
 }
 const Strategy = new LocalStrategy(VerifiyCallback);
 

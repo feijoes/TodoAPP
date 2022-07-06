@@ -1,11 +1,10 @@
 require("dotenv").config()
 const mongoose = require("mongoose")
-const conn = process.env.mongoDB;
-const connection = mongoose.createConnection(conn, {
+
+const MongoDB = mongoose.connect(process.env.mongoDB, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-});
-
+})
 const TaskShema = new mongoose.Schema({
     user:{
         type:String,
@@ -28,11 +27,16 @@ const UserShema = new mongoose.Schema({
         require : [true, "must provide a username"],
         minlength : [6, "username cant be less than 6 charactes"]
     },
-    password: {
-        type:String,
-        require : [true, "must provide a password"]
-    }
+    hash:String,
+    salt:String,
 })
-const User = connection.model('User', UserShema);
-const Task = connection.model('Task', TaskShema);
-module.exports = connection;
+
+
+const User = mongoose.model('User', UserShema);
+const Task = mongoose.model('Task', TaskShema);
+
+module.exports ={
+    MongoDB,
+    Task,
+    User    
+}

@@ -1,5 +1,4 @@
-const connection = require('../db/coneccion');
-const Task = connection.models.Task
+const {Task} = require('../db/coneccion');
 
 
 // Create or Get a task
@@ -15,8 +14,9 @@ const getAllTodos = async (req,res)=>{
 
 const createTodo = async ( req,res )=>{
     try {
-        req.body.user = req.user
+        req.body.user = req.user.username
         const task = await Task.create(req.body)
+        console.log(task)
         res.status(201).json({ task })
     } catch (error) {
         res.status(500).json({ message:error })

@@ -11,6 +11,7 @@ export const Taks = () => {
       }
       get()
     }, []);
+    console.log(todo)
   return (
     <div>{ todo.map((task) => <Todo task={task}/> ) }</div>
   )
