@@ -1,6 +1,8 @@
 import React,{useState} from 'react'
 import "../config";
 import "../static/Home.css"
+import axios from 'axios';
+import Cookies from 'universal-cookie';
 export const Home = () => {
   const [inputs, setInputs] = useState({});
 
@@ -12,20 +14,21 @@ export const Home = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-    myHeaders.append( 'Accept', 'application/json',)
-    fetch(global.config.url + 'login/',{
-      method: "POST",
-      mode: 'cors',
-      headers: myHeaders,
-      body: JSON.stringify({
-        username: inputs.username,
-        password: inputs.password
-    })})
+    
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append( 'Accept', 'application/json')
+  
+    const login = await axios.post(global.config.url +"login",{
+      username: inputs.username,
+      password: inputs.password
+    })
 
-
-  }
+    const cookies = new Cookies();
+    cookies.set('session', login.data, { path: '/' })
+   
+}
+  
 
     return( 
         <div className='container'>
@@ -35,7 +38,7 @@ export const Home = () => {
             </div>
             <div>
               <h2>Login</h2>
-              <form onSubmit={handleSubmit}>           
+              <form onSubmit={handleSubmit} >           
                 <input type="text" name="username" value={inputs.username || ''} onChange={handleChange}/>
                 <input type="password" name="password" value={inputs.password || ''} onChange={handleChange} />
                 <input type="submit" value="Submit" />    

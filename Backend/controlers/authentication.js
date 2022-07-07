@@ -5,12 +5,11 @@ const {User} = require('../db/coneccion');
 const LogOut = require('express-passport-logout');
 require('../security/passport')
 
-const login = passport.authenticate("local", {
-    failureRedirect: "/login-failure",
-    successRedirect: "/login-success"
-  },(err, user, options) => {
-    console.log(options) // options will be the complete object you pass in done()
-});
+const passportlogin = passport.authenticate("local", {
+    badRequestMessage: 'Your message you want to change.',
+  });
+
+const login = (req,res)=> res.send(req.session)
 
 const register = (req, res)=>{
     const saltHash = passwordUtils.genPassword(req.body.password);
@@ -31,7 +30,7 @@ const register = (req, res)=>{
     
     const newUser = new User(user)
     newUser.save()
-    res.redirect('http://localhost:3000/login')
+    res.redirect('http://localhost:3000/')
  }
 const logout = (req, res, next) => {
     LogOut()
@@ -41,6 +40,7 @@ const logout = (req, res, next) => {
 
 
 module.exports ={
+    passportlogin,
     login,
     logout,
     register

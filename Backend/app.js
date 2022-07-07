@@ -10,14 +10,15 @@ const connection = require('./db/coneccion');
 const MongoStore = require('connect-mongodb-session')(session);
 const sessionStore = new MongoStore({mongooseConnection: connection, collection: 'session'})
 const back = require('express-back');
+const middleware = require('./middlewares/middleware')
 const bodyParser = require('body-parser')
-
 require('dotenv').config()
 
-app.use(cors({origin: 'http://localhost:3000'}))
+app.use(cors({origin: 'http://localhost:3000',credentials:true}))
 app.use(session({
     secret: process.env.secret,
     saveUninitialized: true,
+    resave:true,
     store: sessionStore,
     cookie:{
         maxAge: 1000 * 60 * 60 *24
@@ -37,11 +38,11 @@ app.use((req,res,next)=>{
     console.log(req.session)
     console.log(req.user)
     next()
-
 })
 app.use("/api/v1/todo",tasks)
 // Login Logout and Register
 app.use("/api/v1/",authenticate)
 
+app.use(middleware.NotFound)
 
 app.listen(5000)
