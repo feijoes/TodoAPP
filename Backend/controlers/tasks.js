@@ -1,5 +1,7 @@
 const { Task } = require('../db/coneccion');
 const { AsyncWrapper } = require('../middlewares/middleware')
+const { CreateError } = require('../errors/Custon-error')
+
 
 // Create or Get a task
 const getAllTodos = AsyncWrapper( async (req,res)=>{
@@ -17,12 +19,14 @@ const createTodo = AsyncWrapper( async ( req,res )=>{
 });
 
 // Get , Modifying and Delete a task
-const getTodo = AsyncWrapper( async (req,res)=>{
+const getTodo = AsyncWrapper( async (req,res, next)=>{
     
     const { id:TodoId } = req.params.id 
     const todo = await Task.findOne({ _id:TodoId })
 
-    if(!todo) return res.status(404).json({ message:`No task with id ${req.params.id}`})
+    if(!todo) {
+        return next(CreateError(`no task with id ${ TodoId }`, 404))
+    }
     
     res.status(200).json({ todo })
 });
@@ -35,7 +39,9 @@ const updateTodo = AsyncWrapper( async (req,res)=>{
         runValidators:true
     })
 
-    if(!todo) return res.status(404).json({ message:`No task with id ${req.params.id}`})
+    if(!todo) {
+        return next(CreateError(`no task with id ${ TodoId }`, 404))
+    }
     res.status(200).json({ todo })
 });
 const deleteTodo = AsyncWrapper(async (req,res)=>{
@@ -44,7 +50,9 @@ const deleteTodo = AsyncWrapper(async (req,res)=>{
     req.body.user = req.user
     const todo = Task.findOneAndDelete({ _id:TodoId })
 
-    if(!todo) return res.status(404).json({ message:`No task with id ${req.params.id}`})
+    if(!todo) {
+        return next(CreateError(`no task with id ${ TodoId }`, 404))
+    }
 
     res.status(200).json({ message :"delete" })
    

@@ -10,7 +10,7 @@ const connection = require('./db/coneccion');
 const MongoStore = require('connect-mongodb-session')(session);
 const sessionStore = new MongoStore({mongooseConnection: connection, collection: 'session'})
 const back = require('express-back');
-const middleware = require('./middlewares/middleware')
+const { ErrorHandlerMiddleware, NotFound } = require('./middlewares/middleware')
 const bodyParser = require('body-parser')
 require('dotenv').config()
 
@@ -43,6 +43,8 @@ app.use("/api/v1/todo",tasks)
 // Login Logout and Register
 app.use("/api/v1/",authenticate)
 
-app.use(middleware.NotFound)
+app.use(NotFound)
+
+app.use(ErrorHandlerMiddleware)
 
 app.listen(5000)
