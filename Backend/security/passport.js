@@ -5,7 +5,6 @@ const LocalStrategy = require('passport-local').Strategy;
 const {User} = require('../db/coneccion');
 
 const VerifiyCallback =  ( username, password, done )=>{
-    
     User.findOne({ username:username },(err,user)=>{
         if (err) { return done(err); }
         if (!user) { return done(null, false ) }

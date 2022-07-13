@@ -9,7 +9,9 @@ const passportlogin = passport.authenticate("local", {
     badRequestMessage: 'Your message you want to change.',
   });
 
-const login = (req,res)=> res.send(req.session)
+const login = (req,res)=> {
+    res.send(req.session)
+}
 
 const register = (req, res)=>{
     const saltHash = passwordUtils.genPassword(req.body.password);

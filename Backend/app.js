@@ -37,7 +37,6 @@ app.use(passport.session());
 app.use(back());
 app.use((req,res,next)=>{
     if (!req.user) console.log('user is false')
-    console.log(req)
     next()
 })
 
