@@ -2,7 +2,8 @@ import React,{useState} from 'react'
 import "../config";
 import "../static/Home.css"
 import axios from 'axios';
-import Cookies from 'universal-cookie';
+import { set } from 'mongoose';
+
 export const Home = () => {
   const [inputs, setInputs] = useState({});
 
@@ -14,36 +15,33 @@ export const Home = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append( 'Accept', 'application/json')
-  
-    const login = await axios.post(global.config.url +"login",{
+    if(inputs.username && inputs.password){
+    const login = await axios.post(global.config.url,{
       username: inputs.username,
       password: inputs.password
-    })
-
-    const cookies = new Cookies();
-    cookies.set('session', login.data, { path: '/' })
-   
+    }, { withCredentials: true })
+    setInputs({})
+  }
+  
 }
   
 
     return( 
-        <div className='container'>
+        <div className='container center'>
             <div>
               <h1>Tasks Manager</h1>
               <p>Here where you completed you tasks</p>
             </div>
             <div>
               <h2>Login</h2>
-              <form onSubmit={handleSubmit} >           
+              <form onSubmit={handleSubmit}>           
                 <input type="text" name="username" value={inputs.username || ''} onChange={handleChange}/>
                 <input type="password" name="password" value={inputs.password || ''} onChange={handleChange} />
-                <input type="submit" value="Submit" />    
+                <input id={inputs.username && inputs.password ? 'notready' : ''} disabled data-bs-toggle="button" className="btn btn-success"type="submit" value="Submit" />    
               </form>
             </div>
         </div>
     )
 }
+
+

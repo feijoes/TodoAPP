@@ -2,6 +2,6 @@
     text-align: center;
 }
 .center{
-    display: flex;
-    justify-content: center;
+    width: 40%;
+    margin: 0 auto;
 }

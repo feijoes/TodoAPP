@@ -1,6 +1,6 @@
 
-import './static/App.css';
-import React from "react"
+import './static/App.scss';
+import React,{createContext,useState} from "react"
 import {BrowserRouter as Router,Route,Routes} from "react-router-dom";
 import { Home } from './pages/Home';
 import { Register } from './pages/Register';
@@ -8,8 +8,11 @@ import { Taks } from './pages/Taks';
 import CreateTasks from './pages/CreateTasks';
 const App = () => {
 
+  const [login, setLogin] = useState(false);
+  const UserContext = createContext();
   return (
     <>
+    <UserContext.Provider value={{login,setLogin}}>
     <Router>
         <Routes>
           <Route exact path="/" element={<Home />} />
@@ -18,6 +21,7 @@ const App = () => {
           <Route exact path="/Createtodo" element={<CreateTasks />} />
         </Routes>
     </Router>
+    </UserContext.Provider>
     </>
     )
 }

@@ -4,6 +4,7 @@ const app = express();
 const tasks = require("./routers/tasks")
 const authenticate = require('./routers/authentication_router')
 const cors = require("cors")
+const cookieParser = require("cookie-parser");
 const session = require('express-session');
 const passport = require('passport');
 const connection = require('./db/coneccion');
@@ -13,7 +14,7 @@ const back = require('express-back');
 const { ErrorHandlerMiddleware, NotFound } = require('./middlewares/middleware')
 const bodyParser = require('body-parser')
 require('dotenv').config()
-
+app.use(cookieParser());
 app.use(cors({origin: 'http://localhost:3000',credentials:true}))
 app.use(session({
     secret: process.env.secret,
@@ -35,10 +36,11 @@ app.use(passport.session());
 
 app.use(back());
 app.use((req,res,next)=>{
-    console.log(req.session)
-    console.log(req.user)
+    if (!req.user) console.log('user is false')
+    console.log(req)
     next()
 })
+
 app.use("/api/v1/todo",tasks)
 // Login Logout and Register
 app.use("/api/v1/",authenticate)

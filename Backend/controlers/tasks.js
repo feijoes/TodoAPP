@@ -5,18 +5,17 @@ const { CreateError } = require('../errors/Custon-error')
 
 // Create or Get a task
 const getAllTodos = AsyncWrapper( async (req,res)=>{
-
-    todos = await Task.find({ user:req.user })
+    todos = await Task.find({ user:req.user.username })
     res.status(200).json({ todos });
    
 });
 
 const createTodo = AsyncWrapper( async ( req,res )=>{
- 
     req.body.user = req.user.username
     const task = await Task.create(req.body);
     res.status(201).json({ task });
 });
+
 
 // Get , Modifying and Delete a task
 const getTodo = AsyncWrapper( async (req,res, next)=>{
