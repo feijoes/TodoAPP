@@ -16,6 +16,7 @@ const TaskShema = new mongoose.Schema({
         maxlength: [20, "title cant be more than 20 characters"]
     },
     desc: String,
+    color: String,
     completed: {
         type:Boolean,
         default:false
@@ -30,13 +31,22 @@ const UserShema = new mongoose.Schema({
     hash:String,
     salt:String,
 })
+const ColorShema = new mongoose.Schema({
+    user:{
+        type:String,
+        require : true
+    },
+    color:String,
+    desc:String,
+})
 
 
 const User = mongoose.model('User', UserShema);
 const Task = mongoose.model('Task', TaskShema);
-
+const Color = mongoose.model('Color', ColorShema);
 module.exports ={
     MongoDB,
     Task,
-    User    
+    User,
+    Color    
 }

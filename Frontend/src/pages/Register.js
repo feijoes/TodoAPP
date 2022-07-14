@@ -1,6 +1,8 @@
 import React,{useState} from 'react'
 import "../config";
 import axios from 'axios';
+
+
 export const Register = () => {
 
   const [inputs, setInputs] = useState({});

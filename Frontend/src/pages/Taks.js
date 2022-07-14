@@ -6,6 +6,7 @@ import '../static/Loading.css'
 export const Taks = () => {
     const [todo,setTodo] = useState([])
     const [loading, setLoading] = useState(false)
+    const []
     useEffect(() => {
       const get = async () =>{
         const { data } = await axios.get(global.config.urlAPI, {withCredentials: true})

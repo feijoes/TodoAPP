@@ -2,6 +2,7 @@
 const express = require("express");
 const app = express();
 const tasks = require("./routers/tasks")
+const colors = require('./routers/colors')
 const authenticate = require('./routers/authentication_router')
 const cors = require("cors")
 const cookieParser = require("cookie-parser");
@@ -41,6 +42,7 @@ app.use((req,res,next)=>{
 })
 
 app.use("/api/v1/todo",tasks)
+app.use("/api/v1/color",colors)
 // Login Logout and Register
 app.use("/api/v1/",authenticate)
 
