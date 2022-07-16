@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import "../config";
 import "../static/Home.css"
 import axios from 'axios';
-
+import { Link } from "react-router-dom";
 export const Home = () => {
   const [inputs, setInputs] = useState({});
 
@@ -16,10 +16,13 @@ export const Home = () => {
     event.preventDefault();
     if(inputs.username && inputs.password){
      
-     await axios.post(global.config.url + 'login/',{
+    const login= await axios.post(global.config.url + 'login/',{
       username: inputs.username,
       password: inputs.password
     }, { withCredentials: true })
+    if (login.status ===200){
+      window.location.reload()
+    }
     setInputs({})
   } 
 }
@@ -45,6 +48,7 @@ export const Home = () => {
                 </div>  
               </form>
             </div>
+            <Link to="/register">Register</Link>
         </div>
     )
 }

@@ -7,7 +7,7 @@ import '../static/Loading.css'
 import Sidebar from '../components/Sidebar';
 import { InputTodo } from '../components/InputTodo';
 
-
+import { Link } from "react-router-dom";
 export const Taks = () => {
     const [todo,setTodo] = useState([])
     const [loading, setLoading] = useState(false)
@@ -45,6 +45,7 @@ export const Taks = () => {
   if (!loading){
     return <div className="spinner-border text-primary loading" role="status"><span className="sr-only">.</span></div>
   }
+  if (todo.length ===0 && loading){ <Link to="/">Login Page</Link>}
   return (
     <div>
 
@@ -54,6 +55,7 @@ export const Taks = () => {
           {newtodo && <InputTodo key={'new'} setTodo={setTodo} show={setNewTodo}/>}
           {todo.map((task) => <Todo key={task._id} setListTodo={setListTodo}editTodo={editTodo}actualize={setactualize}task={task} setTodo={setTodo} globalzindex={globalzindex} setZindex={setZindex}/>)}</ul>
       </div>
+      
       <div className='bar'><Sidebar setEditTodos={setEditTodos} newtodo={setNewTodo}/></div>
       
     </div>

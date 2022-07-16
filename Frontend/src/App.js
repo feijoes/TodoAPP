@@ -1,26 +1,22 @@
 
 
-import React,{createContext,useState} from "react"
-import {BrowserRouter as Router,Route,Routes} from "react-router-dom";
+import React from "react"
+import {BrowserRouter as Router,Route,Routes,Navigate} from "react-router-dom";
 import { Home } from './pages/Home';
 import { Register } from './pages/Register';
 import { Taks } from './pages/Taks';
 
 const App = () => {
 
-  const [login, setLogin] = useState(false);
-  const UserContext = createContext();
   return (
     <>
-    <UserContext.Provider value={{login,setLogin}}>
     <Router>
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={localStorage.getItem('userinfo') ? <Navigate  to="/tasks" /> : <Home/>} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/tasks" element={<Taks />} />
         </Routes>
     </Router>
-    </UserContext.Provider>
     </>
     )
 }
