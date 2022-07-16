@@ -1,18 +1,18 @@
 
-    ul,li{
+    ul,.note{
         list-style:none;
     }
     ul{
         overflow:hidden;
         padding:3em;
     }
-    ul li{
+    ul .note{
         text-decoration:none;
         color:#000;
         background:#f6ff7a;
         display:block;
-        height:13em;
-        width:13em;
+        height:11em;
+        width:11em;
         padding:1em;
         -moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
         /* Safari+Chrome */
@@ -21,14 +21,14 @@
         box-shadow: 5px 5px 7px rgba(33,33,33,.7);
     }
 
-    ul li h2{
+    ul .note h2{
         font-size:110%;
         font-weight:bold;
         padding-bottom:10px;
     }
-    ul li p{
+    ul .note pre{
         font-family:"Reenie Beanie",arial,sans-serif;
-        font-size:150%;
+        font-size:135%;
     }
     .box {
         position: absolute;
@@ -38,15 +38,82 @@
       }
       .insidebox{
         position: relative;
-        height:13em;
-        width:13em;
+        height:11em;
+        width:11em;
       
       }
+    .coloroption{
+        width: 11em;
+        height: 2em;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
     .editTodo{
         position: absolute;
-        width: 13em;
+        width: 11em;
         height: 2em;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
         top: -2em;
+    }
+    .newtodo{
+        right: 50%;
+        top: 20%;
+    }
+    textarea, input{
+        background: transparent;
+        width: 100%;
+
+    }
+.title[type="text"]
+{
+    font-size:110%;
+    font-weight:bold;
+    margin-bottom: 15px;
+
+}
+    textarea:focus, input:focus{
+        outline: none;
+    }
+    textarea {
+        height: 60%;
+        border-color:#000;
+        resize: none;
+        max-height: 60%;
+        font-family:"Reenie Beanie",arial,sans-serif;
+        font-size:135%;
+    }
+
+    .checkmark {
+        margin-left: 9em;
+        margin-top: 5px;
+        display:inline-block;
+        width: 20px;
+        height:20px;
+        -ms-transform: rotate(45deg); /* IE 9 */
+        -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+        transform: rotate(45deg);
+        cursor: pointer;
+        background-color: green;
+        border-radius: 50%;
+        
+        
+    }
+    
+    .checkmark_stem {
+        position: absolute;
+        width:3px;
+        height:9px;
+        background-color:#ccc;
+        left:10px;
+        top:5px;
+    }
+    
+    .checkmark_kick {
+        position: absolute;
+        width:3px;
+        height:3px;
+        background-color:#ccc;
+        left:7px;
+        top:11px;
     }

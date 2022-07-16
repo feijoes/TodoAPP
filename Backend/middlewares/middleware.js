@@ -15,7 +15,7 @@ const ErrorHandlerMiddleware = (err, req, res, next) =>{
     if (err instanceof ApiError){
         return res.status(err.statusCode).json({ msg: err.message })
     }
-    return res.status(500).json({ msg: err })
+    return res.status(500).json({ msg: err.message })
 
     return res.status(500).json({ msg: "Something went wrong, try again later.." })
 }

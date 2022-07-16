@@ -17,10 +17,9 @@ const TaskShema = new mongoose.Schema({
     },
     desc: String,
     color: String,
-    completed: {
-        type:Boolean,
-        default:false
-    },
+    x :Number,
+    y :Number,
+    z :Number
 })
 const UserShema = new mongoose.Schema({
     username: {
@@ -31,22 +30,14 @@ const UserShema = new mongoose.Schema({
     hash:String,
     salt:String,
 })
-const ColorShema = new mongoose.Schema({
-    user:{
-        type:String,
-        require : true
-    },
-    color:String,
-    desc:String,
-})
 
 
 const User = mongoose.model('User', UserShema);
 const Task = mongoose.model('Task', TaskShema);
-const Color = mongoose.model('Color', ColorShema);
+
 module.exports ={
     MongoDB,
     Task,
     User,
-    Color    
+   
 }

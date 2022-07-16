@@ -5,13 +5,16 @@ const { CreateError } = require('../errors/Custon-error')
 
 // Create or Get a task
 const getAllTodos = AsyncWrapper( async (req,res)=>{
-    todos = await Task.find({ user:req.user.username })
+    const todos = await Task.find({ user:req.user.username })
+
     res.status(200).json({ todos });
    
 });
 
 const createTodo = AsyncWrapper( async ( req,res )=>{
     req.body.user = req.user.username
+    const todos = await Task.find({ user:req.user.username })
+    req.body.z = 1
     const task = await Task.create(req.body);
     res.status(201).json({ task });
 });
@@ -20,8 +23,8 @@ const createTodo = AsyncWrapper( async ( req,res )=>{
 // Get , Modifying and Delete a task
 const getTodo = AsyncWrapper( async (req,res, next)=>{
     
-    const { id:TodoId } = req.params.id 
-    const todo = await Task.findOne({ _id:TodoId })
+    const id  = req.params.id 
+    const todo = await Task.findById({ _id:id })
 
     if(!todo) {
         return next(CreateError(`no task with id ${ TodoId }`, 404))
@@ -31,23 +34,32 @@ const getTodo = AsyncWrapper( async (req,res, next)=>{
 });
 const updateTodo = AsyncWrapper( async (req,res)=>{
 
-    const { id:TodoId } = req.params.id 
+    const TodoId  = req.params.id 
 
-    const todo = Task.findOneAndUpdate({ _id:TodoId },req.body,{
+    const all = await Task.find({user:req.user.username})
+    all.forEach( async(ele)=>{
+        await Task.findByIdAndUpdate(ele._id,{z:req.body.globalzindex.indexOf(ele._id.toString())+1},{
+            new:true,
+            runValidators:true
+        })
+    })
+    delete req.body.globalzindex
+    const todo = await Task.findByIdAndUpdate(TodoId,req.body,{
         new:true,
         runValidators:true
     })
-
+    
+  
     if(!todo) {
         return next(CreateError(`no task with id ${ TodoId }`, 404))
     }
-    res.status(200).json({ todo })
+    res.status(200).json({ msg: 'succes' })
 });
 const deleteTodo = AsyncWrapper(async (req,res)=>{
-    const { id:TodoId } = req.params.id 
+    const TodoId = req.params.id 
     
     req.body.user = req.user
-    const todo = Task.findOneAndDelete({ _id:TodoId })
+    const todo = Task.findByIdAndDelete(TodoId)
 
     if(!todo) {
         return next(CreateError(`no task with id ${ TodoId }`, 404))

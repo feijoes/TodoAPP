@@ -1,0 +1,14 @@
+.options{
+    background-color: aqua;
+    height: 100vh;
+     overflow: auto;
+    width: 300px;
+}
+.optionsclick{
+    justify-self: start;
+}
+.textclick{
+    font-size:xx-large;
+    position: relative;
+   
+}
