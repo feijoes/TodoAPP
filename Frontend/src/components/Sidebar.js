@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { BiNote } from 'react-icons/bi';
-
+import { AiOutlineEdit } from "react-icons/ai";
 import {
   faBars,
   faUsers,
@@ -16,7 +16,7 @@ const menuItems = [
 ];
 
 
-const Sidebar = ({newtodo}) => {
+const Sidebar = ({newtodo,setEditTodos}) => {
   const [isOpen, setIsOpen] = useState(true);
   return (
     <div className={cx("sidebar", { "sidebar-closed": !isOpen })}>
@@ -34,6 +34,19 @@ const Sidebar = ({newtodo}) => {
                 unmountOnExit
               >
                 <span>{"New Note"}</span>
+              </CSSTransition>
+            </div>
+          </li>
+          <li key={"Edit Todo"}>
+            <div onClick={()=>setEditTodos(e=>!e)} className={"sidebar__listItem big"}>
+              <AiOutlineEdit className={"sidebar__icon"} />
+              <CSSTransition
+                in={isOpen}
+                timeout={200}
+                classNames={"fade"}
+                unmountOnExit
+              >
+                <span>{"Edit Notes"}</span>
               </CSSTransition>
             </div>
           </li>

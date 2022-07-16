@@ -14,6 +14,8 @@ export const Taks = () => {
     const [globalzindex,setZindex] = useState([])
     const [newtodo, setNewTodo] = useState(false)
     const [actualize,setactualize] = useState([])
+    const [editTodo,setEditTodos] = useState(false)
+    const [listedit,setListTodo] = useState([])
     useEffect(() => {
       const get = async () =>{
         const { data } = await axios.get(global.config.urlAPI, {withCredentials: true})
@@ -34,9 +36,10 @@ export const Taks = () => {
               globalzindex:globalzindex
           }, { withCredentials: true })})
           setactualize([])
-      }, 1500)
+      }, 501)
       
       return () => clearTimeout(delayDebounceFn)
+    // eslint-disable-next-line
     }, [actualize])
 
   if (!loading){
@@ -47,10 +50,11 @@ export const Taks = () => {
 
       <div>
         <ul>
-          {newtodo && <InputTodo setTodo={setTodo} show={setNewTodo}/>}
-          {todo.map((task) => <Todo key={task._id} actualize={setactualize}task={task} globalzindex={globalzindex} setZindex={setZindex}/>)}</ul>
+          {listedit.length >=1 && listedit.map((task)=> <InputTodo key={task}globalzindex={globalzindex} defaulttask={task} setTodo={setTodo}show={setListTodo}/>)}
+          {newtodo && <InputTodo key={'new'} setTodo={setTodo} show={setNewTodo}/>}
+          {todo.map((task) => <Todo key={task._id} setListTodo={setListTodo}editTodo={editTodo}actualize={setactualize}task={task} setTodo={setTodo} globalzindex={globalzindex} setZindex={setZindex}/>)}</ul>
       </div>
-      <div className='bar'><Sidebar newtodo={setNewTodo}/></div>
+      <div className='bar'><Sidebar setEditTodos={setEditTodos} newtodo={setNewTodo}/></div>
       
     </div>
   )

@@ -117,3 +117,39 @@
         left:7px;
         top:11px;
     }
+    span.icon {
+        position: absolute;
+        right: 10px;
+        top: 4px;
+        background:#e2e2e2;
+        border-radius:100%;
+        width:20px;
+        height:20px;
+        line-height:20px;
+        vertical-align:middle;
+        text-align:center;
+        color:#0000ff;
+        font-size:14px;
+        cursor:pointer;
+      }
+      .fas{
+        margin-left: 3px;
+      }
+      .deleteButton {
+        position: absolute;
+        background: red;
+        border: 1px solid #f00;
+        border-radius: 2em;
+        color: white;
+        display: inline-block;
+        font-size: 12px;
+        top: 6px;
+        left:10px;
+        z-index: 1001;
+        height: 20px;
+        line-height: 2px;
+        margin: 0 0 8px;
+        padding: 0;
+        text-align: center;
+        width: 20px;
+        }

@@ -16,7 +16,7 @@ export const Home = () => {
     event.preventDefault();
     if(inputs.username && inputs.password){
      
-    const login = await axios.post(global.config.url + 'login/',{
+     await axios.post(global.config.url + 'login/',{
       username: inputs.username,
       password: inputs.password
     }, { withCredentials: true })

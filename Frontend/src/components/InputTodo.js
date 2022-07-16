@@ -1,12 +1,13 @@
-import React,{ useRef,useState} from 'react'
+import React,{ useState} from 'react'
 import '../static/Todo.css'
 import "../config";
 import axios from 'axios';
 import { SelectColor } from './SelectColor';
-export const InputTodo = ({ setTodo,show }) => {
-    const myRef = useRef();
-    const [selectedOption, setSelectedOption] = useState(null);
-    const [inputs, setInputs] = useState({});
+import Draggable from 'react-draggable';
+export const InputTodo = ({globalzindex,defaulttask,setTodo,show }) => {
+
+    const [selectedOption, setSelectedOption] = useState(defaulttask?.color || 'red');
+    const [inputs, setInputs] = useState({title:defaulttask?.title|| '',desc:defaulttask?.desc||'' ,x:defaulttask?.x || 150,y:defaulttask?.y || 150});
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -16,26 +17,50 @@ export const InputTodo = ({ setTodo,show }) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         setTodo(e=>[...e,{
+            _id : defaulttask._id || null,
             title: inputs.title,
             desc: inputs.desc,
-            x :  myRef.current.offsetLeft,
-            y: myRef.current.offsetTop,
+            x :  inputs.x,
+            y: inputs.y,
             color:selectedOption
         }])
-        show(e=>!e)
+        
+        const data = {
+          title: inputs.title,
+          desc: inputs.desc,
+          x :  inputs.x,
+          y: inputs.y,
+          color:selectedOption
+      }
+        if (!defaulttask) {
+          show(e=>!e)
+          await axios.post(global.config.urlAPI,data, { withCredentials: true })
+          
+        }
+        else {
+          data.globalzindex = [...globalzindex,defaulttask._id]
+          show(e=>[...e].filter((todo)=> todo._id!==defaulttask._id))
+          await axios.patch(global.config.urlAPI + defaulttask._id,data, { withCredentials: true })}
+        
+      
+    } 
 
-        await axios.post(global.config.urlAPI,{
+  return (
+    <Draggable defaultPosition={{x:inputs.x, y:inputs.y}} onDrag={(e,data)=>{setInputs({...inputs,x:data.x,y:data.y})}}>
+    <div className={defaulttask ?"box":'box newtodo'} style={{cursor: 'default',zIndex:100}}> 
+      <div className="insidebox">
+        <button className="deleteButton" onClick={()=>{
+          if(defaulttask){
+          show(e=>[...e].filter((todo)=> todo._id!==defaulttask._id))
+          setTodo(e=>[...e,{
+            _id : defaulttask._id || null,
             title: inputs.title,
             desc: inputs.desc,
-            x :  myRef.current.offsetLeft,
-            y: myRef.current.offsetTop,
+            x :  inputs.x,
+            y: inputs.y,
             color:selectedOption
-        }, { withCredentials: true })
-    } 
-      
-  return (
-    <div ref={myRef} className='box newtodo' style={{cursor: 'default',zIndex:3}}> 
-      <div className="insidebox">
+        }])}
+        else show(e=>!e)}}>X</button>
         <SelectColor selectedOption={selectedOption} setSelectedOption={setSelectedOption}/>
         <span className="checkmark" onClick={handleSubmit}> 
             <div className="checkmark_stem"></div>
@@ -50,5 +75,6 @@ export const InputTodo = ({ setTodo,show }) => {
     
         </div>
       </div>
+      </Draggable>
   )
 }

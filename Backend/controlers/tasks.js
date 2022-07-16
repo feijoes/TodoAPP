@@ -13,7 +13,6 @@ const getAllTodos = AsyncWrapper( async (req,res)=>{
 
 const createTodo = AsyncWrapper( async ( req,res )=>{
     req.body.user = req.user.username
-    const todos = await Task.find({ user:req.user.username })
     req.body.z = 1
     const task = await Task.create(req.body);
     res.status(201).json({ task });

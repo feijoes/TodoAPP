@@ -32,34 +32,33 @@ const ListItem = styled("li")`
   margin-bottom: 0.8em;
 `;
 
-const options = ["blue", "green", "orange"];
+
 
 export  const SelectColor=({selectedOption, setSelectedOption})=> {
   const [isOpen, setIsOpen] = useState(false);
-
+  const options =["blue", "green", "orange",'red','yellow']
 
   const toggling = () => setIsOpen(!isOpen);
 
-  const onOptionClicked = value => () => {
+  const onOptionClicked = (value) => {
     setSelectedOption(value);
     setIsOpen(false);
-    console.log(selectedOption);
   };
 
   return (
       <DropDownContainer>
         <div onClick={toggling}>
-            <div className="coloroption"style={{backgroundColor: selectedOption || 'red'}}>
+            <div className="coloroption"style={{backgroundColor: selectedOption }}>
             </div>
         </div>
         {isOpen && (
           <div>
             <DropDownList>
-              {options.map(option => (
-                <ListItem onClick={onOptionClicked(option)} key={Math.random()}>
+              {options.map(option => option !== selectedOption? (
+                <ListItem onClick={()=>{onOptionClicked(option)}} key={Math.random()}>
                   {option}
                 </ListItem>
-              ))}
+              ):null)}
             </DropDownList>
           </div>
         )}
