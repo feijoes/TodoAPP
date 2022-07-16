@@ -3,17 +3,11 @@ import { CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { BiNote } from 'react-icons/bi';
 import { AiOutlineEdit } from "react-icons/ai";
-import {
-  faBars,
-  faUsers,
-} from "@fortawesome/free-solid-svg-icons";
+import {faBars} from "@fortawesome/free-solid-svg-icons";
 
 import cx from "classnames";
 import '../static/Sidebar.css'
 
-const menuItems = [
-  { title: "User", icon: faUsers },
-];
 
 
 const Sidebar = ({newtodo,setEditTodos}) => {
@@ -50,21 +44,6 @@ const Sidebar = ({newtodo,setEditTodos}) => {
               </CSSTransition>
             </div>
           </li>
-        {menuItems.map(item => (
-          <li key={item.title}>
-            <div className={"sidebar__listItem"}>
-              <FontAwesomeIcon className={"sidebar__icon"} icon={item.icon} />
-              <CSSTransition
-                in={isOpen}
-                timeout={200}
-                classNames={"fade"}
-                unmountOnExit
-              >
-                <span>{item.title}</span>
-              </CSSTransition>
-            </div>
-          </li>
-        ))}
       </ul>
     </div>
   );
